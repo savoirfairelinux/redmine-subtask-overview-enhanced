@@ -1,0 +1,8 @@
+= SFL Subtask Overview Enhanced 
+== Savoir-faire Linux
+
+Show time spent and estimated time of each tasks into the subtasks overview of a task page.
+
+Authors : David Côté-Tremblay
+
+https://savoirfairelinux.com/
