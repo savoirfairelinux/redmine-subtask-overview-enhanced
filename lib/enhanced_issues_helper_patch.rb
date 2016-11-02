@@ -42,8 +42,8 @@ module EnhancedIssuesHelperPatch
                      content_tag('td', link_to_issue(child, :truncate => 60, :project => (issue.project_id != child.project_id)), :class => 'subject') +
                      content_tag('td', h(child.status)) +
                      content_tag('td', link_to_user(child.assigned_to)) +
-                     content_tag('td', "~ "+sprintf('%.2f', child.estimated_hours.to_f).to_s+"h") +
-                     content_tag('td', "= "+sprintf('%.2f', child.spent_hours).to_s+"h") +
+                     content_tag('td', (if child.estimated_hours then "~ "+sprintf('%.2f', child.estimated_hours.to_f).to_s+"h" end)) +
+                     content_tag('td', (if child.spent_hours then "= "+sprintf('%.2f', child.spent_hours.to_f).to_s+"h" end)) +
                      content_tag('td', progress_bar(child.done_ratio, :width => '80px')),
                      :class => css)
             end
