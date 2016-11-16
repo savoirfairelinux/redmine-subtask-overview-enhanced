@@ -40,7 +40,7 @@ module EnhancedIssuesHelperPatch
                 content_tag('th', l(:field_assigned_to)) +
                 content_tag('th', l(:estimated_hours)) +
                 content_tag('th', l(:spent_hours)) +
-                content_tag('th', l(:remaining_hours)) +
+                (content_tag('th', l(:remaining_hours)) if issue.project.module_enabled? 'backlogs') +
                 content_tag('th', l(:field_done_ratio))
             )) if Setting.plugin_sfl_subtask_overview_enhanced['show_header']
 
