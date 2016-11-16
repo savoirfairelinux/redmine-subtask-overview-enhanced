@@ -34,6 +34,16 @@ module EnhancedIssuesHelperPatch
 
         def render_descendants_tree_with_enhanced_info(issue)
             s = '<form><table class="list issues">'
+            s << content_tag('thead', content_tag('tr', 
+                content_tag('th', l(:field_issue)) +
+                content_tag('th', l(:field_status)) +
+                content_tag('th', l(:field_assigned_to)) +
+                content_tag('th', l(:estimated_hours)) +
+                content_tag('th', l(:spent_hours)) +
+                content_tag('th', l(:remaining_hours)) +
+                content_tag('th', l(:field_done_ratio))
+            )) if Setting.plugin_sfl_subtask_overview_enhanced['show_header']
+
             issue_list(issue.descendants.visible.sort_by(&:lft)) do |child, level|
                 css = "issue issue-#{child.id} hascontextmenu"
                 css << " idnt idnt-#{level}" if level > 0
@@ -42,9 +52,9 @@ module EnhancedIssuesHelperPatch
                      content_tag('td', link_to_issue(child, :truncate => 60, :project => (issue.project_id != child.project_id)), :class => 'subject') +
                      content_tag('td', h(child.status)) +
                      content_tag('td', link_to_user(child.assigned_to)) +
-                     (content_tag('td', (if child.remaining_hours then "- "+child.remaining_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'backlogs') +
                      content_tag('td', (if child.estimated_hours then "~ "+child.estimated_hours.to_f.round(2).to_s+"h" end)) +
                      content_tag('td', (if child.spent_hours then "= "+child.spent_hours.to_f.round(2).to_s+"h" end)) +
+                     (content_tag('td', (if child.remaining_hours then "+ "+child.remaining_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'backlogs') +
                      content_tag('td', progress_bar(child.done_ratio, :width => '80px')),
                      :class => css)
             end

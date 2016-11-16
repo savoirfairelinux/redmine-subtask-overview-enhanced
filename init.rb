@@ -9,7 +9,7 @@ else
     object_to_prepare = Rails.configuration
 end
 
-Redmine::Plugin.register :sfl_subtank_overview_enhanced do
+Redmine::Plugin.register :sfl_subtask_overview_enhanced do
 
     name 'SFL Subtask Overview Enhanced'
     author 'David Côté-Tremblay'
@@ -17,5 +17,9 @@ Redmine::Plugin.register :sfl_subtank_overview_enhanced do
     version '0.0.1'
     url 'https://gitlab.savoirfairelinux.com/redmine/SFL-Subtask-Overview-Enhanced'
     author_url 'http://savoirfairelinux.com'
+
+    settings :default => {
+        'show_header' => false,
+    },  :partial => 'sfl_subtask_overview_enhanced_settings'
 
 end
