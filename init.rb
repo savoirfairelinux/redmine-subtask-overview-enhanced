@@ -2,13 +2,7 @@ require 'redmine'
 
 require 'enhanced_issues_helper_patch'
 
-if Rails::VERSION::MAJOR < 3
-    require 'dispatcher'
-    object_to_prepare = Dispatcher
-else
-    object_to_prepare = Rails.configuration
-end
-
+object_to_prepare = Rails.configuration
 Redmine::Plugin.register :sfl_subtask_overview_enhanced do
 
     name 'SFL Subtask Overview Enhanced'
