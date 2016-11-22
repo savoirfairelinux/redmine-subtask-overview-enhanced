@@ -35,7 +35,7 @@ module EnhancedIssuesHelperPatch
         def render_descendants_tree_with_enhanced_info(issue)
             s = '<form><table class="list issues">'
             permissions = [:estimated_hours, :remaining_hours, :spent_hours]
-            if Redmine::Plugin.registered_plugins.keys.include? :sfl_backlogs_banque_heures_permissions then
+            if Redmine::Plugin.registered_plugins.keys.include? :sfl_backlogs_permissions then
                 permissions.delete_if {|perm| not SFL_Permissions.is_user_allowed_to?(User.current, :read, perm.to_s, issue.project)}
             end
             s << content_tag('thead', content_tag('tr', 
