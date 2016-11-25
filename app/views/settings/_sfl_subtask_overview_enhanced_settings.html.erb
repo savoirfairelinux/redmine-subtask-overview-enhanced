@@ -3,5 +3,5 @@
 </h1>
 
 <p>
-  <label for="settings_show_header">Show table header in subtask overview</label> <%= check_box_tag("settings[show_header]", true, @settings[:show_header]) %>
+  <label for="settings_show_header">Show table header in subtask overview</label> <%= check_box_tag("settings[show_header]", true, @settings == '' ? false : @settings[:show_header]) %>
 </p>
