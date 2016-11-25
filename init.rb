@@ -1,16 +1,14 @@
 require 'redmine'
-
 require 'enhanced_issues_helper_patch'
 
-object_to_prepare = Rails.configuration
-Redmine::Plugin.register :sfl_subtask_overview_enhanced do
+Redmine::Plugin.register :redmine_subtask_overview_enhanced do
 
-    name 'SFL Subtask Overview Enhanced'
-    author 'David Côté-Tremblay'
+    name 'Redmine Subtask Overview Enhanced'
+    author 'Savoir-faire Linux'
     description 'Show time spent and estimated time of each tasks into the subtasks overview of a task page.'
-    version '0.0.1'
-    url 'https://gitlab.savoirfairelinux.com/redmine/SFL-Subtask-Overview-Enhanced'
-    author_url 'http://savoirfairelinux.com'
+    version '0.1.0'
+    url 'https://github.com/savoirfairelinux/redmine-subtask-overview-enhanced'
+    author_url 'https://www.savoirfairelinux.com/'
 
     settings :default => {
         'show_header' => false,

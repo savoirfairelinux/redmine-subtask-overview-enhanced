@@ -1,4 +1,3 @@
-# encoding: utf-8
 #
 # Redmine - project management software
 # Copyright (C) 2006-2014  Jean-Philippe Lang
@@ -17,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
+#
 require_dependency 'issues_helper'
 
 module EnhancedIssuesHelperPatch
@@ -46,7 +45,7 @@ module EnhancedIssuesHelperPatch
                 (content_tag('th', l(:label_spent_time)) if issue.project.module_enabled? 'time_tracking' and permissions.include? :spent_hours) +
                 (content_tag('th', l(:field_remaining_hours)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours) +
                 content_tag('th', l(:field_done_ratio))
-            )) if Setting.plugin_sfl_subtask_overview_enhanced['show_header']
+            )) if Setting.plugin_redmine_subtask_overview_enhanced['show_header']
 
             issue_list(issue.descendants.visible.sort_by(&:lft)) do |child, level|
                 css = "issue issue-#{child.id} hascontextmenu"
@@ -71,4 +70,3 @@ module EnhancedIssuesHelperPatch
 end
 
 IssuesHelper.send(:include, EnhancedIssuesHelperPatch)
-
