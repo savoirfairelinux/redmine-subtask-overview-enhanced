@@ -49,6 +49,8 @@ Configuration procedure
 
 There's no special configuration to do, but you can customise a little.
 
+But if you want specially that the "Spent time" values appears in subtask overview, you must enable it in `Project -> Settings -> Modules`, once there, you can check the "spent hours in subtasks" checkbox then save. The reason why it is enabled per-project, is because for possible performances issues for huge loaded Redmine instances (database joins and summations for every subtasks showed).
+
 For instance, you can choose to show the subtask overview header or hide it, it is disabled by default.
 
 If you want to enable the header : `Administration -> Plugins -> Redmine Subtask Overview Enhanced -> Configuration`

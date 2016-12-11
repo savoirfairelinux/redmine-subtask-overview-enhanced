@@ -14,4 +14,8 @@ Redmine::Plugin.register :redmine_subtask_overview_enhanced do
         'show_header' => false,
     },  :partial => 'sfl_subtask_overview_enhanced_settings'
 
+    project_module :spent_hours_in_subtasks do
+        permission :view_time_entries, {}
+    end
+
 end

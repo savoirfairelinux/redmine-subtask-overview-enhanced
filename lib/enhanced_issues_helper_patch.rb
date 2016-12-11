@@ -42,7 +42,7 @@ module EnhancedIssuesHelperPatch
                 content_tag('th', l(:field_status)) +
                 content_tag('th', l(:field_assigned_to)) +
                 (content_tag('th', l(:field_estimated_hours)) if permissions.include? :estimated_hours) +
-                (content_tag('th', l(:label_spent_time)) if issue.project.module_enabled? 'time_tracking' and permissions.include? :spent_hours) +
+                (content_tag('th', l(:label_spent_time)) if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
                 (content_tag('th', l(:field_remaining_hours)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours) +
                 content_tag('th', l(:field_done_ratio))
             )) if Setting.plugin_redmine_subtask_overview_enhanced['show_header']
@@ -56,7 +56,7 @@ module EnhancedIssuesHelperPatch
                      content_tag('td', h(child.status)) +
                      content_tag('td', link_to_user(child.assigned_to)) +
                      (content_tag('td', (if child.estimated_hours then "~ "+child.estimated_hours.to_f.round(2).to_s+"h" end)) if permissions.include? :estimated_hours) +
-                     (content_tag('td', (if child.spent_hours then "= "+child.spent_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'time_tracking' and permissions.include? :spent_hours) +
+                     (content_tag('td', (if child.spent_hours then "= "+child.spent_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
                      (content_tag('td', (if child.remaining_hours then "+ "+child.remaining_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours) +
                      content_tag('td', progress_bar(child.done_ratio, :width => '80px')),
                      :class => css)
