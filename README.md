@@ -47,9 +47,9 @@ service apache2 reload  # or depending on which HTTP server you use
 Configuration procedure
 -----------------------
 
-There's no special configuration to do, but you can customise a little.
+If you want specially that the "Spent time" values appears in subtask overview, you must enable it in `Project -> Settings -> Modules`, once there, you can check the "spent hours in subtasks" checkbox then save. The reason why it is enabled per-project, is because for possible performances issues for huge loaded Redmine instances (database joins and summations for every subtasks showed).
 
-But if you want specially that the "Spent time" values appears in subtask overview, you must enable it in `Project -> Settings -> Modules`, once there, you can check the "spent hours in subtasks" checkbox then save. The reason why it is enabled per-project, is because for possible performances issues for huge loaded Redmine instances (database joins and summations for every subtasks showed).
+After this, there's no special configuration to do, but you can customise a little.
 
 For instance, you can choose to show the subtask overview header or hide it, it is disabled by default.
 
