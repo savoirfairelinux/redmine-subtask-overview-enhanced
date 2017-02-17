@@ -43,11 +43,10 @@ module EnhancedIssuesHelperPatch
             s << content_tag('thead', content_tag('tr', 
                 content_tag('th', l(:field_issue)) +
                 content_tag('th', l(:field_status)) +
-                content_tag('th', l(:field_assigned_to)) +
-                (content_tag('th', l(:field_estimated_hours)) if permissions.include? :estimated_hours) +
-                (content_tag('th', l(:label_spent_time)) if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
-                (content_tag('th', l(:field_remaining_hours)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours) +
-                content_tag('th', l(:field_done_ratio))
+                content_tag('th', l(:field_assigned_to), :class => 'assigned-to') +
+                (content_tag('th', l(:estimated_hours)) if permissions.include? :estimated_hours) +
+                (content_tag('th', l(:spent_time)) if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
+                (content_tag('th', l(:remaining_hours)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours)
             )) if Setting.plugin_redmine_subtask_overview_enhanced['show_header']
 
             issue_list(issue.descendants.visible.sort_by(&:lft)) do |child, level|
@@ -57,13 +56,45 @@ module EnhancedIssuesHelperPatch
                      content_tag('td', check_box_tag("ids[]", child.id, false, :id => nil), :class => 'checkbox') +
                      content_tag('td', link_to_issue(child, :truncate => 60, :project => (issue.project_id != child.project_id)), :class => 'subject') +
                      content_tag('td', h(child.status)) +
-                     content_tag('td', link_to_user(child.assigned_to)) +
-                     (content_tag('td', (if child.estimated_hours then "~ "+child.estimated_hours.to_f.round(2).to_s+"h" end)) if permissions.include? :estimated_hours) +
-                     (content_tag('td', (if child.spent_hours then "= "+child.spent_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
-                     (content_tag('td', (if child.remaining_hours then "+ "+child.remaining_hours.to_f.round(2).to_s+"h" end)) if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours) +
-                     content_tag('td', progress_bar(child.done_ratio, :width => '80px')),
+                     content_tag('td', link_to_user(child.assigned_to), :class => 'assigned-to') +
+                     (content_tag('td', (if child.estimated_hours then "~ "+child.estimated_hours.to_f.round(2).to_s+"h" end), :class => 'num') if permissions.include? :estimated_hours) +
+                     (content_tag('td', (if child.spent_hours then "= "+child.spent_hours.to_f.round(2).to_s+"h" end), :class => 'num') if issue.project.module_enabled? 'time_tracking' and issue.project.module_enabled? 'spent_hours_in_subtasks' and permissions.include? :spent_hours) +
+                     (content_tag('td', (if child.remaining_hours then "+ "+child.remaining_hours.to_f.round(2).to_s+"h" end), :class => 'num') if issue.project.module_enabled? 'backlogs' and permissions.include? :remaining_hours),
                      :class => css)
             end
+            s << content_tag('style', "
+                @media (max-width: 899px) {
+                    table {
+                        table-layout: fixed;
+                    }
+                    table thead {
+                        display:none;
+                    }
+                    table .issue th, table .issue td:not(.checkbox) {
+                        display: table-cell!important;
+                        float: none!important;
+                        text-align:center;
+                    }
+                    table .issue .subject {
+                        text-align:left;
+                    }
+                    table .assigned-to {
+                        visibility: collapse;
+                        width:0!important;
+                        overflow:hidden!important;
+                    }
+                    table .num {
+                        width: 23%!important;
+                    }
+                }
+                @media (max-width: 614px) {
+                    table .num {
+                        visibility: collapse;
+                        width:0!important;
+                        overflow:hidden!important;
+                    }
+                }
+            ")
             s << '</table></form>'
             s.html_safe
         end
